@@ -4,6 +4,7 @@
   "description": "node app",
   "main": "index.js",
   "scripts": {
+    "init": "yarn",
     "start": "nodemon app.js"
   },
   "repository": {
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/yangxw1993/node-app#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.11.13"
   }
 }
