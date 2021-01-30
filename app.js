@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-27 22:34:35
- * @LastEditTime: 2021-01-30 18:26:01
+ * @LastEditTime: 2021-01-30 21:21:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/app.js
@@ -72,7 +72,7 @@ app.get('/book', (req, res) => {
 app.get('/add', (req, res) => {
   res.render('books/add')
 })
-
+// 获取编辑内容
 app.get('/add/:id', (req, res) => {
   console.log(req.params);
   const _id = req.params.id;
@@ -80,6 +80,7 @@ app.get('/add/:id', (req, res) => {
     res.render('books/add', { document })
   })
 })
+// 编辑
 app.put('/add/:id', (req, res) => {
   Idea.findOne({
     _id: req.params.id
@@ -87,10 +88,18 @@ app.put('/add/:id', (req, res) => {
     const {title, details} = req.body;
     idea.title = title;
     idea.details = details;
-    console.log('idea',idea);
+    
     new Idea(idea).save().then(idea => {
       res.redirect('/book')
     })
+  })
+})
+// 删除
+app.delete('/add/:id', (req, res) => {
+  Idea.deleteOne({
+    _id: req.params.id
+  }).then(_=> {
+    res.redirect('/book')
   })
 })
 

@@ -5,6 +5,10 @@
         <h3>{{title}}</h3>
         <div>{{details}}</div>
         <a href="/add/{{_id}}" class="btn btn-dark">编辑</a>
+        <form method="POST" action="/add/{{_id}}?_method=DELETE">
+          <input type="hidden" name="method" value="DELETE" />
+          <input type="submit" class="btn btn-danger" value="删除" />
+        </form>
        </li>
   {{else}}
     <p>没有内容</p>
