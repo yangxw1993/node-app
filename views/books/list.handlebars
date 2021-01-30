@@ -2,9 +2,9 @@
 <ul class="list-group">
   {{#each document}}
     <li class="list-group-item">
-      {{@index}}
         <h3>{{title}}</h3>
-        <h5>{{details}}</h5>
+        <div>{{details}}</div>
+        <a href="/add/{{_id}}" class="btn btn-dark">编辑</a>
        </li>
   {{else}}
     <p>没有内容</p>
