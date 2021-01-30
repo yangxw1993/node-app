@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-27 22:34:35
- * @LastEditTime: 2021-01-30 21:21:05
+ * @LastEditTime: 2021-01-30 21:55:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/app.js
@@ -12,6 +12,8 @@ const exhbs = require('express-handlebars')
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const { urlencoded } = require('express');
+const flash = require('connect-flash');
+const session = require('express-session')
 const app = express()
 const port = 3000
 
@@ -19,6 +21,20 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 app.use(methodOverride('_method'))
+
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true,
+}))
+
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  next()
+})
+
 app.engine('handlebars', exhbs({
   defaultLayout: 'main',
   runtimeOptions: {
@@ -90,6 +106,7 @@ app.put('/add/:id', (req, res) => {
     idea.details = details;
     
     new Idea(idea).save().then(idea => {
+      req.flash('success_msg', '数据删除成功')
       res.redirect('/book')
     })
   })
@@ -99,6 +116,7 @@ app.delete('/add/:id', (req, res) => {
   Idea.deleteOne({
     _id: req.params.id
   }).then(_=> {
+    req.flash('success_msg', '数据删除成功')
     res.redirect('/book')
   })
 })
