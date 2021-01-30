@@ -1,0 +1,17 @@
+<a href="/add" class="btn btn-primary" type="submit">去添加</a>
+<ul class="list-group">
+  {{#each document}}
+    <li class="list-group-item">
+      {{@index}}
+        <h3>{{title}}</h3>
+        <h5>{{details}}</h5>
+       </li>
+  {{else}}
+    <p>没有内容</p>
+  {{/each}}
+  {{!-- <li class="list-group-item">An item</li>
+  <li class="list-group-item">A second item</li>
+  <li class="list-group-item">A third item</li>
+  <li class="list-group-item">A fourth item</li>
+  <li class="list-group-item">And a fifth one</li> --}}
+</ul>

@@ -1,0 +1,33 @@
+<ul class="nav nav-tabs">
+  {{#each navList}}
+  <li class="nav-item">
+    <a class="nav-link active" href="/">{{this.name}}</a>
+  </li>
+  {{/each}}
+  <li class="nav-item">
+    <a class="nav-link active" href="/">首页</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/about">关于我们</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/book">列表</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/add">添加</a>
+  </li>
+</ul>
+<script>
+  const navList = [
+    {
+      name: '首页',
+      pathname: '/'
+    },
+    {
+      name: '关于我们',
+      pathname: '/about'
+    }
+  ]
+console.log(window.location.pathname)
+  
+</script>

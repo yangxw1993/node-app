@@ -19,7 +19,7 @@
   "homepage": "https://github.com/yangxw1993/node-app#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "express-handlebars": "^5.2.0",
+    "express-handlebars": "^4.5.0",
     "mongoose": "^5.11.13"
   }
 }

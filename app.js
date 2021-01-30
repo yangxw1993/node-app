@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-27 22:34:35
- * @LastEditTime: 2021-01-27 23:53:44
+ * @LastEditTime: 2021-01-30 11:26:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/app.js
@@ -17,7 +17,11 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 app.engine('handlebars', exhbs({
-  defaultLayout: 'main'
+  defaultLayout: 'main',
+  runtimeOptions: {
+    allowProtoPropertiesByDefault: true,
+    allowProtoMethodsByDefault: true,
+  },
 }));
 app.set('view engine', 'handlebars')
 
@@ -38,10 +42,30 @@ new Idea({
 }).catch(err => {
   console.error(err)
 })
- 
+//  首页
 app.get('/', (req, res) => {
-  res.render('index')
+  const title = '大家好，我们首页。'
+  res.render('index', {
+    title,
+  })
 })
+// 关于我们
+app.get('/about', (req, res) => {
+  res.render('about')
+})
+
+app.get('/book', (req, res) => {
+  Idea.find({}).sort({
+    date: 'desc'
+  }).then(result => {
+    res.render('books/list', {document: result})
+  })
+  
+})
+app.get('/add', (req, res) => {
+  res.render('books/add')
+})
+
 app.post('/add', (req, res) => {
   console.log(req.body);
   res.send('post')
