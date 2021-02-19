@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-27 22:34:35
- * @LastEditTime: 2021-01-30 21:55:20
+ * @LastEditTime: 2021-02-19 22:15:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/app.js
@@ -44,6 +44,11 @@ app.engine('handlebars', exhbs({
 }));
 app.set('view engine', 'handlebars')
 
+// load router
+const ideas = require('./routes/books.js');
+const users = require('./routes/user.js');
+
+
 // 链接mongo
 mongoose.connect('mongodb://localhost/node-app', {
   useNewUrlParser: true,
@@ -54,9 +59,6 @@ mongoose.connect('mongodb://localhost/node-app', {
   console.log(err); 
 })
 
-require("./models/idea");
-const Idea = mongoose.model('ideas');
-const idea = new Idea();
 // new Idea({
 //   title: '测试',
 //   details: '使用mongo'
@@ -76,50 +78,11 @@ app.get('/', (req, res) => {
 app.get('/about', (req, res) => {
   res.render('about')
 })
-// 列表
-app.get('/book', (req, res) => {
-  Idea.find({}).sort({
-    date: 'desc'
-  }).then(result => {
-    res.render('books/list', {document: result})
-  })
-})
-// 添加和编辑
-app.get('/add', (req, res) => {
-  res.render('books/add')
-})
-// 获取编辑内容
-app.get('/add/:id', (req, res) => {
-  console.log(req.params);
-  const _id = req.params.id;
-  Idea.findOne({ _id }).then(document => {
-    res.render('books/add', { document })
-  })
-})
-// 编辑
-app.put('/add/:id', (req, res) => {
-  Idea.findOne({
-    _id: req.params.id
-  }).then(idea => {
-    const {title, details} = req.body;
-    idea.title = title;
-    idea.details = details;
-    
-    new Idea(idea).save().then(idea => {
-      req.flash('success_msg', '数据删除成功')
-      res.redirect('/book')
-    })
-  })
-})
-// 删除
-app.delete('/add/:id', (req, res) => {
-  Idea.deleteOne({
-    _id: req.params.id
-  }).then(_=> {
-    req.flash('success_msg', '数据删除成功')
-    res.redirect('/book')
-  })
-})
+
+// use router
+app.use('/', ideas)
+app.use('/users', users);
+
 
 app.post('/add', (req, res) => {
   console.log(req.body);
