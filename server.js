@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-21 11:51:53
- * @LastEditTime: 2021-03-21 22:07:29
+ * @LastEditTime: 2021-03-21 22:52:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/server.js
@@ -15,8 +15,17 @@ const app = express()
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true }))
 
-const users = require('./routes/api/user');
+// 链接mongo
+mongoose.connect('mongodb://localhost/node-app', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(res => {
+  console.log('mongo is collection success');
+}).catch(err => {
+  console.log(err);
+})
 
+const users = require('./routes/api/user');
 app.use('/api/users', users);
 
 const port = 5005
