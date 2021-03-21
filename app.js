@@ -1,13 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2021-01-27 22:34:35
- * @LastEditTime: 2021-02-19 22:15:09
+ * @LastEditTime: 2021-02-20 23:22:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/app.js
  */
 
 const express = require('express');
+const path = require('path');
 const exhbs = require('express-handlebars')
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
@@ -21,6 +22,9 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 app.use(methodOverride('_method'))
+
+// 使用静态文件
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(session({
   secret: 'secret',
