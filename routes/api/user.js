@@ -1,13 +1,15 @@
 /*
  * @Author: your name
  * @Date: 2021-03-01 23:19:15
- * @LastEditTime: 2021-03-27 15:11:54
+ * @LastEditTime: 2021-03-27 22:14:52
  * @LastEditors: Please set LastEditors
  * @FilePath: /node-app/routes/api/user.js
  */
 const express = require('express');
 const gravatar = require('gravatar'); 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+const { key } = require('../../config/config')
 const router = express.Router();
 const User = require('../../models/User');
 
@@ -17,6 +19,13 @@ router.get('/test', (req,res) => {
 // 注册 
 router.post('/register', (req, res) => {
   const {email, name, password} = req.body;
+  if(!email || !name || !password){
+    res.json({
+      code: 1, 
+      msg: '参数不完整'
+    })
+    return
+  }
   User.findOne({
     email
   }).then(user => {
@@ -57,9 +66,25 @@ router.post('/login', (req, res) => {
 
     // 密码匹配
     const isMatch = bcrypt.compareSync(password, user.password);
-    return res.json({ code: isMatch ? 0 : 1, msg: isMatch ? 'ok' : '用户名或密码错误' })
+    if(isMatch){
+      // 设置token
+      const rule = { id: user.id, name: user.name };
+      jwt.sign(rule, key, { expiresIn: 60 * 60 }, (err, token) => {
+        if (err) throw err;
+        res.json({
+          code: 0,
+          data: token
+        })
+      })
+    }else{
+      res.json({ code: 1, msg: '用户名或密码错误' })
+    }
+    
   })
 })
+/**
+ * 
+ */
 
  
 module.exports = router
