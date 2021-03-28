@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-01 23:19:15
- * @LastEditTime: 2021-03-27 22:14:52
+ * @LastEditTime: 2021-03-28 11:51:49
  * @LastEditors: Please set LastEditors
  * @FilePath: /node-app/routes/api/user.js
  */
@@ -12,6 +12,7 @@ const jwt = require('jsonwebtoken')
 const { key } = require('../../config/config')
 const router = express.Router();
 const User = require('../../models/User');
+const passport = require('passport')
 
 router.get('/test', (req,res) => {
   res.json({msg: 'login works'})
@@ -62,7 +63,6 @@ router.post('/login', (req, res) => {
     if(!user){
       return res.json({code: 1, msg: '用户不存在!'})
     }
-    console.log(user);
 
     // 密码匹配
     const isMatch = bcrypt.compareSync(password, user.password);
@@ -73,7 +73,7 @@ router.post('/login', (req, res) => {
         if (err) throw err;
         res.json({
           code: 0,
-          data: token
+          data: 'Bearer ' + token
         })
       })
     }else{
@@ -83,8 +83,12 @@ router.post('/login', (req, res) => {
   })
 })
 /**
- * 
+ * $router GET api.user/checkLogin
  */
-
+router.get('/checkToken', 
+          passport.authenticate('jwt', {session: false}), 
+          (req,res) => {
+  res.json({msg: 'success'})
+})
  
 module.exports = router
