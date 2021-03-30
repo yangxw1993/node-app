@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-01 23:19:15
- * @LastEditTime: 2021-03-28 11:51:49
+ * @LastEditTime: 2021-03-30 23:05:32
  * @LastEditors: Please set LastEditors
  * @FilePath: /node-app/routes/api/user.js
  */
@@ -73,7 +73,7 @@ router.post('/login', (req, res) => {
         if (err) throw err;
         res.json({
           code: 0,
-          data: 'Bearer ' + token
+          data: token
         })
       })
     }else{
@@ -85,10 +85,15 @@ router.post('/login', (req, res) => {
 /**
  * $router GET api.user/checkLogin
  */
-router.get('/checkToken', 
-          passport.authenticate('jwt', {session: false}), 
-          (req,res) => {
-  res.json({msg: 'success'})
+router.get('/checkToken',  (req,res) => {
+  const {token} = req.headers;
+  jwt.verify(token, key, (err, decoded) => {
+    if (err) {
+      return
+    }
+    res.json({ msg: 'success', user: decoded})
+  })
+  
 })
  
 module.exports = router

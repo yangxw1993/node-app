@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-21 11:51:53
- * @LastEditTime: 2021-03-27 23:20:07
+ * @LastEditTime: 2021-03-30 23:06:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/server.js
@@ -12,6 +12,7 @@ const passport = require('passport');
 
 
 const app = express()
+
 
 // 使用post获取body
 app.use(express.json()) // for parsing application/json
