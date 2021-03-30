@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-01 23:19:15
- * @LastEditTime: 2021-03-30 23:05:32
+ * @LastEditTime: 2021-03-30 23:07:48
  * @LastEditors: Please set LastEditors
  * @FilePath: /node-app/routes/api/user.js
  */
@@ -89,6 +89,7 @@ router.get('/checkToken',  (req,res) => {
   const {token} = req.headers;
   jwt.verify(token, key, (err, decoded) => {
     if (err) {
+      res.status(401).json({ code: 1, msg: '未授权'})
       return
     }
     res.json({ msg: 'success', user: decoded})
