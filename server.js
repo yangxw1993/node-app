@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-21 11:51:53
- * @LastEditTime: 2021-03-30 23:06:24
+ * @LastEditTime: 2021-04-03 16:57:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/server.js
@@ -9,6 +9,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
+
+const checkToken = require('./middleware/checkToken')
 
 
 const app = express()
@@ -32,8 +34,11 @@ mongoose.connect('mongodb://localhost/node-app', {
   console.log(err);
 })
 
+// 全局验证token
+app.use(checkToken);
 const users = require('./routes/api/user');
 app.use('/api/users', users);
+app.use('/api/profile', require('./routes/api/profile'));
 
 const port = 5005
 app.listen(port, () => {
