@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-03 11:02:51
- * @LastEditTime: 2021-04-03 15:18:25
+ * @LastEditTime: 2021-04-03 23:01:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/models/Profiles.js
@@ -13,7 +13,7 @@ const ProfileSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
-  handel: {
+  handle: {
     type: String,
     required: true,
     max: 40
