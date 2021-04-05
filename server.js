@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-21 11:51:53
- * @LastEditTime: 2021-04-03 16:57:00
+ * @LastEditTime: 2021-04-05 22:42:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/server.js
@@ -33,7 +33,9 @@ mongoose.connect('mongodb://localhost/node-app', {
 }).catch(err => {
   console.log(err);
 })
-
+app.get('/', (req, res) => {
+  res.json({ msg: 'Hello Nodejs' })
+})
 // 全局验证token
 app.use(checkToken);
 const users = require('./routes/api/user');
