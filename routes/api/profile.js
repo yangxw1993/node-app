@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-03 15:19:16
- * @LastEditTime: 2021-04-03 23:16:11
+ * @LastEditTime: 2021-04-04 22:58:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/routes/api/profile.js
@@ -19,9 +19,13 @@ const {successSend, failSend} = require('../../utils/utils')
  * @param {*}
  * @return {*}
  */
-router.get('/test', (req,res) => {
-  console.log(req.user);
-  res.json({msg: 'ok'})
+router.get('/', (req,res) => {
+  Profile.findOne({ user: req.user.id}).populate('user', ['name', 'avatar']).then(profile => {
+    if(!profile){
+      return res.json(failSend('该用户信息不存在'))
+    }
+    res.json(successSend('ok', profile))
+  }).catch(err => res.json(err))
 })
 router.post('/', (req, res) => {
   const profileFieds = {
@@ -48,7 +52,7 @@ router.post('/', (req, res) => {
       // 用户信息存在，执行更新方法
       // res.json({ a: '用户信息存在' })
       Profile.findOneAndUpdate({ user: profileFieds.user}, {$set: profileFieds}, {new: true}).then(newUser => {
-        res.json(successSend(newUser))
+        res.json(successSend('更新成功', newUser,))
       })
     }else{
       Profile.findOne({handle}).then(user => {
@@ -57,11 +61,36 @@ router.post('/', (req, res) => {
         }
       })
       new Profile(profileFieds).save().then(newUser => {
-        res.json(newUser)
+        res.json(successSend( '创建成功', newUser))
       })
       // res.json({ a: '用户信息不存在' })
     }
   })
   
+})
+/**
+ * @description: 通过userid获取个人信息
+ * @param {*}
+ * @return {*}
+ */
+
+router.get('/user/:user_id', (req, res) => {
+  const { user_id } = req.params
+  Profile.findOne({ user: user_id}).then(profile => {
+    if(!profile){
+      res.json(failSend('未找到该用户信息'))
+    }
+    res.json(successSend('ok', profile))
+  })
+})
+
+// 获取所有列表
+router.get('/list', (req, res) => {
+  Profile.find().then(profiles => {
+    if(!profiles){
+      res.json(failSend('没有信息'))
+    }
+    res.json(successSend('ok', profiles))
+  })
 })
 module.exports = router 
