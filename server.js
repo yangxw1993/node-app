@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-21 11:51:53
- * @LastEditTime: 2021-04-05 22:42:58
+ * @LastEditTime: 2021-04-11 22:04:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/server.js
@@ -41,6 +41,7 @@ app.use(checkToken);
 const users = require('./routes/api/user');
 app.use('/api/users', users);
 app.use('/api/profile', require('./routes/api/profile'));
+app.use('/api/sendMsg', require('./routes/api/sendMsg'));
 
 const port = 5005
 app.listen(port, () => {

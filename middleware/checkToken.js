@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-03 15:47:46
- * @LastEditTime: 2021-04-04 23:03:16
+ * @LastEditTime: 2021-04-11 22:07:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /node-app/config/checkToken.js
@@ -17,7 +17,8 @@ module.exports = ((req,res, next) => {
     '/api/users/register', 
     '/api/users/login',
     '/api/profile/list',
-    '/api/profile/user/'
+    '/api/profile/user/',
+    '/api/sendMsg',
   ];
   const isNext = urlArr.find(item => url.includes(item) );
   if(isNext){

@@ -2,7 +2,7 @@
   "name": "app",
   "version": "1.0.0",
   "description": "node app",
-  "main": "index.js",
+  "main": "index.js 2KZXQ7",
   "scripts": {
     "init": "yarn",
     "start": "nodemon app.js",
@@ -29,6 +29,7 @@
     "method-override": "^3.0.0",
     "mongoose": "^5.11.13",
     "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "tencentcloud-sdk-nodejs": "^4.0.95"
   }
 }
